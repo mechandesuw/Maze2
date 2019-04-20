@@ -136,41 +136,43 @@ class ViewController: UIViewController {
             }
             
             for wallRect in self.wallRectArray {
-                if (wallRect.intersects(self.playerView.frame)){
-                    self.gameCheck("gameover", Message: "壁に当たりました")
+                if wallRect.intersects(self.playerView.frame){
+                    self.gameCheck("gameover", message: "壁に当たりました")
                     return
                 }
             }
             
-                 if (self.goalView.frame.intersects(self.playerView.frame)){
+            if self.goalView.frame.intersects(self.playerView.frame){
                     self.gameCheck("clear", message: "クリアしました！")
                 return
             }
         
+        
             self.playerView.center = CGPoint(x: posX, y: posY)
         
             }
-        
-        func gameCheck(result: String, message: String){
-            //加速度を止める
-            if playerMotionManager.isAccelerometerActive {
-                playerMotionManager.stopAccelerometerUpdates()
-        }
-            
-            let gameCheckAlert: UIAlertController = UIAlertController(title: result, message: message, preferredStyle: .alert)
-            
-            let retryAction = UIAlertAction(title: "もう一度", style: .default, handler: {(action: UIAlertAction!) -> Void in
-            self.retry()
-        })
-            gameCheckAlert.addAction(retryAction)
-            
-            self.present(gameCheckAlert, animated: true, completion: nil)
-        
-        
+    
         //加速度の開始
         playerMotionManager.startAccelerometerUpdates(to: OperationQueue.main, withHandler: handler)
         
+        
+    }
+    
+    func gameCheck(result: String, message: String){
+        //加速度を止める
+        if playerMotionManager.isAccelerometerActive {
+            playerMotionManager.stopAccelerometerUpdates()
         }
+        
+        let gameCheckAlert: UIAlertController = UIAlertController(title: result, message: message, preferredStyle: .alert)
+        
+        let retryAction = UIAlertAction(title: "もう一度", style: .default, handler: {(action: UIAlertAction!) -> Void in
+            self.retry()
+        })
+        gameCheckAlert.addAction(retryAction)
+        
+        self.present(gameCheckAlert, animated: true, completion: nil)
+        
     }
         
         func retry() {
