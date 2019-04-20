@@ -136,17 +136,16 @@ class ViewController: UIViewController {
             }
             
             for wallRect in self.wallRectArray {
-                if wallRect.intersects(self.playerView.frame){
+                if (wallRect.intersects(self.playerView.frame)) {
                     self.gameCheck("gameover", message: "壁に当たりました")
                     return
                 }
             }
             
-            if self.goalView.frame.intersects(self.playerView.frame){
+            if (self.goalView.frame.intersects(self.playerView.frame)){
                     self.gameCheck("clear", message: "クリアしました！")
                 return
             }
-        
         
             self.playerView.center = CGPoint(x: posX, y: posY)
         
@@ -154,7 +153,6 @@ class ViewController: UIViewController {
     
         //加速度の開始
         playerMotionManager.startAccelerometerUpdates(to: OperationQueue.main, withHandler: handler)
-        
         
     }
     
@@ -169,6 +167,7 @@ class ViewController: UIViewController {
         let retryAction = UIAlertAction(title: "もう一度", style: .default, handler: {(action: UIAlertAction!) -> Void in
             self.retry()
         })
+        
         gameCheckAlert.addAction(retryAction)
         
         self.present(gameCheckAlert, animated: true, completion: nil)
